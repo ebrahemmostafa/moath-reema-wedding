@@ -116,10 +116,11 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 <div class="inv-card footer-card reveal"><span class="ornament">*</span><h2 style="font-size:1.6rem">The curtain rises on<br><em>our forever.</em></h2><div class="divider"></div><p class="sub" style="color:var(--cream)">Moath &amp; Reema</p><p style="margin-top:2rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase">11 October 2026</p></div>
 <div style="height:5rem"></div>
 </div>
+<div id="ytPlayer" style="position:fixed;left:-9999px;top:0;width:200px;height:200px;opacity:0;pointer-events:none"></div>
 <div class="music-btn" id="musicBtn"><div class="bars"><span style="height:3px"></span><span style="height:7px"></span><span style="height:5px"></span></div>Music</div>
 <script>
 const wrapper=document.getElementById('envelopeWrapper'),main=document.getElementById('mainContent');
-wrapper.addEventListener('click',()=>{if(wrapper.classList.contains('opened'))return;wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflowY='auto';setTimeout(()=>wrapper.querySelector('video').pause(),1200)});
+wrapper.addEventListener('click',()=>{if(wrapper.classList.contains('opened'))return;setMusic(true);wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflowY='auto';setTimeout(()=>wrapper.querySelector('video').pause(),1200)});
 document.body.style.overflowY='hidden';
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let W,H,sparks=[];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
@@ -137,9 +138,12 @@ const wedding=new Date('2026-10-11T20:00:00');
 function updateCD(){const now=new Date(),diff=wedding-now;if(diff<=0)return;document.getElementById('cd-days').textContent=String(Math.floor(diff/864e5)).padStart(3,'0');document.getElementById('cd-hours').textContent=String(Math.floor(diff%864e5/36e5)).padStart(2,'0');document.getElementById('cd-mins').textContent=String(Math.floor(diff%36e5/6e4)).padStart(2,'0');document.getElementById('cd-secs').textContent=String(Math.floor(diff%6e4/1e3)).padStart(2,'0')}
 updateCD();setInterval(updateCD,1000);
 document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefault();e.target.style.display='none';document.getElementById('thankYou').style.display='block'});
-const musicBtn=document.getElementById('musicBtn');let playing=false;
-musicBtn.addEventListener('click',()=>{playing=!playing;musicBtn.classList.toggle('playing',playing)});
+const musicBtn=document.getElementById('musicBtn'),SONG='oa1oU6OcxXI';let playing=false,yt=null,ytReady=false;
+function setMusic(on){playing=on;musicBtn.classList.toggle('playing',on);if(!ytReady)return;if(on){yt.unMute();yt.setVolume(70);yt.playVideo()}else yt.pauseVideo()}
+window.onYouTubeIframeAPIReady=()=>{yt=new YT.Player('ytPlayer',{videoId:SONG,playerVars:{autoplay:0,controls:0,loop:1,playlist:SONG,playsinline:1},events:{onReady:()=>{ytReady=true;if(playing)setMusic(true)}}})};
+musicBtn.addEventListener('click',()=>setMusic(!playing));
 </script>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="../invitation-language-switch.js"></script>
 </body>
 </html>
