@@ -14,10 +14,6 @@ html{scroll-behavior:smooth}
 body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radial-gradient(circle at 20% 0%,#F9F2E6 0,transparent 50%),radial-gradient(circle at 80% 100%,#EADCC6 0,transparent 55%);background-attachment:fixed;color:var(--text);overflow-x:hidden}
 .envelope-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#F3EADB,#E6D6BE);transition:opacity .8s;pointer-events:all}
 .envelope-wrapper.opened{opacity:0;pointer-events:none}
-.envelope-wrapper .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.envelope-wrapper::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(243,234,219,.35),rgba(230,214,190,.55))}
-.envelope-wrapper .envelope{z-index:2}
-.envelope .tap{text-shadow:0 1px 6px rgba(251,247,240,.9)}
 .envelope{position:relative;width:320px;height:420px;cursor:pointer}
 .envelope .seal{width:120px;height:120px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;border-radius:50%;overflow:hidden;box-shadow:0 4px 20px rgba(62,47,37,.3);transition:transform .4s}
 .envelope .seal img{width:100%;height:100%}
@@ -44,7 +40,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radi
 .inv-card .divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.2rem auto}
 .inv-card p{font-size:.8rem;line-height:1.8;color:var(--text);font-weight:300}
 .hero-card{padding:0;overflow:hidden}
-.hero-card .hero-img{height:300px;background:url('images/hero.jpg') center/cover;position:relative}
+.hero-card .hero-img{height:300px;position:relative;overflow:hidden;background:url('images/hero.jpg') center/cover}
+.hero-card .hero-img video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-card .hero-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(251,247,240,.98))}
 .hero-card .hero-body{padding:2rem 2rem 2.5rem;margin-top:-3rem;position:relative}
 .date-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-top:1.5rem}
@@ -97,7 +94,6 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </head>
 <body>
 <div class="envelope-wrapper" id="envelopeWrapper">
-<video class="bg-video" src="videos/intro.mp4" autoplay muted loop playsinline preload="auto"></video>
 <div class="envelope" id="envelope">
 <div class="flap"></div>
 <div class="card-peek"><div class="inner"><p class="small">The grand celebration of</p><h3>Laila <em>&amp;</em> Sherif</h3></div></div>
@@ -108,7 +104,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </div>
 <canvas id="particles"></canvas>
 <div class="main" id="mainContent">
-<div class="inv-card hero-card reveal"><div class="hero-img"></div><div class="hero-body"><span class="ornament">* * *</span><span class="eyebrow">Save the Date</span><h2>Laila <em>&amp;</em> Sherif</h2><div class="divider"></div><p class="sub">We are getting married</p></div></div>
+<div class="inv-card hero-card reveal"><div class="hero-img"><video src="videos/intro.mp4" autoplay muted loop playsinline preload="auto"></video></div><div class="hero-body"><span class="ornament">* * *</span><span class="eyebrow">Save the Date</span><h2>Laila <em>&amp;</em> Sherif</h2><div class="divider"></div><p class="sub">We are getting married</p></div></div>
 <div class="inv-card reveal"><span class="eyebrow">When &amp; Where</span><h2 style="font-size:1.6rem">The <em>Details</em></h2><div class="date-grid"><div class="col"><span class="label">Sunday</span><span class="value">14</span><span class="detail">Feb 2027</span></div><div class="sep"></div><div class="col"><span class="label">Ceremony</span><span class="value">8:00</span><span class="detail">Evening</span></div></div><div class="divider"></div><p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--ink)">The Royal Opera</p><p style="font-size:.75rem;opacity:.7">Cairo, Egypt</p><a href="https://maps.google.com/?q=Cairo+Opera+House" class="map-link" target="_blank">Open in Maps -></a></div>
 <div class="inv-card reveal"><span class="eyebrow">Counting Down</span><h2 style="font-size:1.4rem">Until <em>Forever</em></h2><div class="cd-grid"><div class="cd-unit"><div class="num" id="cd-days">000</div><div class="lbl">Days</div></div><div class="cd-unit"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div><div class="cd-unit"><div class="num" id="cd-mins">00</div><div class="lbl">Mins</div></div><div class="cd-unit"><div class="num" id="cd-secs">00</div><div class="lbl">Secs</div></div></div></div>
 <div class="inv-card reveal"><span class="eyebrow">Our Story</span><h2 style="font-size:1.4rem">How It <em>Began</em></h2><div class="divider"></div><img class="story-img" src="images/story1.jpg" alt="First meeting" loading="lazy" decoding="async"><p style="font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--ink);margin:.5rem 0">Opening night</p><p>At the Cairo Opera on a winter evening, their seats were side by side. By intermission, the real performance had already begun.</p></div>
@@ -122,7 +118,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 <div class="music-btn" id="musicBtn"><div class="bars"><span style="height:3px"></span><span style="height:7px"></span><span style="height:5px"></span></div>Music</div>
 <script>
 const env=document.getElementById('envelope'),wrapper=document.getElementById('envelopeWrapper'),main=document.getElementById('mainContent');
-env.addEventListener('click',()=>{env.classList.add('open');setTimeout(()=>{wrapper.classList.add('opened');main.classList.add('show');setTimeout(()=>wrapper.querySelector('video').pause(),800);document.body.style.overflow='auto'},1200)});
+env.addEventListener('click',()=>{env.classList.add('open');setTimeout(()=>{wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflow='auto'},1200)});
 document.body.style.overflow='hidden';
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let W,H,sparks=[];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
