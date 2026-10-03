@@ -39,11 +39,13 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radi
 .inv-card .sub{font-family:'Playfair Display',serif;font-size:.95rem;font-style:italic;color:var(--text)}
 .inv-card .divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.2rem auto}
 .inv-card p{font-size:.8rem;line-height:1.8;color:var(--text);font-weight:300}
-.hero-card{padding:0;overflow:hidden}
-.hero-card .hero-img{height:300px;position:relative;overflow:hidden;background:url('images/hero.jpg') center/cover}
+.hero-card{padding:0;overflow:hidden;width:100vw;margin:0 0 1.5rem calc(50% - 50vw);height:100vh;height:100svh;border-radius:0;border:none;box-shadow:none;display:flex;flex-direction:column;justify-content:flex-end;background:var(--bg)}
+.hero-card::before{display:none}
+.hero-card .hero-img{position:absolute;inset:0;overflow:hidden}
 .hero-card .hero-img video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-card .hero-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(251,247,240,.98))}
-.hero-card .hero-body{padding:2rem 2rem 2.5rem;margin-top:-3rem;position:relative}
+.hero-card .hero-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(transparent,rgba(243,234,219,.75) 45%,rgba(243,234,219,.97))}
+.hero-card .hero-body{position:relative;z-index:1;padding:2rem 2rem 3.5rem}
+.hero-card .scroll-hint{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:1;color:var(--gold);font-size:1rem;animation:tapPulse 2s infinite}
 .date-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-top:1.5rem}
 .date-grid .col{text-align:center}
 .date-grid .col .label{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
@@ -104,7 +106,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </div>
 <canvas id="particles"></canvas>
 <div class="main" id="mainContent">
-<div class="inv-card hero-card reveal"><div class="hero-img"><video src="videos/intro.mp4" autoplay muted loop playsinline preload="auto"></video></div><div class="hero-body"><span class="ornament">* * *</span><span class="eyebrow">Save the Date</span><h2>Laila <em>&amp;</em> Sherif</h2><div class="divider"></div><p class="sub">We are getting married</p></div></div>
+<div class="inv-card hero-card"><div class="hero-img"><video src="videos/intro.mp4" autoplay muted loop playsinline preload="auto"></video></div><div class="hero-body"><span class="ornament">* * *</span><span class="eyebrow">Save the Date</span><h2>Laila <em>&amp;</em> Sherif</h2><div class="divider"></div><p class="sub">We are getting married</p></div><span class="scroll-hint">&#8964;</span></div>
 <div class="inv-card reveal"><span class="eyebrow">When &amp; Where</span><h2 style="font-size:1.6rem">The <em>Details</em></h2><div class="date-grid"><div class="col"><span class="label">Sunday</span><span class="value">14</span><span class="detail">Feb 2027</span></div><div class="sep"></div><div class="col"><span class="label">Ceremony</span><span class="value">8:00</span><span class="detail">Evening</span></div></div><div class="divider"></div><p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--ink)">The Royal Opera</p><p style="font-size:.75rem;opacity:.7">Cairo, Egypt</p><a href="https://maps.google.com/?q=Cairo+Opera+House" class="map-link" target="_blank">Open in Maps -></a></div>
 <div class="inv-card reveal"><span class="eyebrow">Counting Down</span><h2 style="font-size:1.4rem">Until <em>Forever</em></h2><div class="cd-grid"><div class="cd-unit"><div class="num" id="cd-days">000</div><div class="lbl">Days</div></div><div class="cd-unit"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div><div class="cd-unit"><div class="num" id="cd-mins">00</div><div class="lbl">Mins</div></div><div class="cd-unit"><div class="num" id="cd-secs">00</div><div class="lbl">Secs</div></div></div></div>
 <div class="inv-card reveal"><span class="eyebrow">Our Story</span><h2 style="font-size:1.4rem">How It <em>Began</em></h2><div class="divider"></div><img class="story-img" src="images/story1.jpg" alt="First meeting" loading="lazy" decoding="async"><p style="font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--ink);margin:.5rem 0">Opening night</p><p>At the Cairo Opera on a winter evening, their seats were side by side. By intermission, the real performance had already begun.</p></div>
