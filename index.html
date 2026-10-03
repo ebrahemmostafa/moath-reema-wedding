@@ -12,22 +12,14 @@
 :root{--accent:#A0785A;--accent-light:#B8916F;--gold:#A8834F;--cream:#FBF7F0;--sand:#EFE4D2;--ink:#3E2F25;--text:#6B5646;--bg:#F3EADB}
 html{scroll-behavior:smooth}
 body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radial-gradient(circle at 20% 0%,#F9F2E6 0,transparent 50%),radial-gradient(circle at 80% 100%,#EADCC6 0,transparent 55%);background-attachment:fixed;color:var(--text);overflow-x:hidden}
-.envelope-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#F3EADB,#E6D6BE);transition:opacity .8s;pointer-events:all}
-.envelope-wrapper.opened{opacity:0;pointer-events:none}
-.envelope{position:relative;width:320px;height:420px;cursor:pointer}
-.envelope .seal{width:120px;height:120px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;border-radius:50%;overflow:hidden;box-shadow:0 4px 20px rgba(62,47,37,.3);transition:transform .4s}
-.envelope .seal img{width:100%;height:100%}
-.envelope .seal:hover{transform:translate(-50%,-50%) scale(1.08)}
-.envelope .tap{position:absolute;bottom:-2.5rem;left:50%;transform:translateX(-50%);font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);animation:tapPulse 2s infinite;white-space:nowrap}
-.envelope .flap{position:absolute;top:0;left:0;width:100%;height:50%;background:linear-gradient(135deg,#D9C4A5,#C9B08D);clip-path:polygon(0 0,100% 0,50% 100%);z-index:5;transform-origin:top center;transition:transform .6s .2s}
-.envelope.open .flap{transform:rotateX(180deg)}
-.envelope .body-env{position:absolute;bottom:0;left:0;width:100%;height:70%;background:linear-gradient(180deg,#D6C0A0,#C4AA86);border-radius:0 0 8px 8px;box-shadow:0 5px 30px rgba(62,47,37,.2)}
-.envelope .card-peek{position:absolute;top:15%;left:10%;width:80%;height:60%;background:var(--cream);border-radius:4px;box-shadow:0 2px 15px rgba(62,47,37,.1);display:flex;align-items:center;justify-content:center;text-align:center;padding:1.5rem;z-index:3;transition:transform .6s .4s}
-.envelope.open .card-peek{transform:translateY(-120%)}
-.card-peek .inner{font-family:'Playfair Display',serif}
-.card-peek .inner .small{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
-.card-peek .inner h3{font-size:1.4rem;font-weight:400;color:var(--ink);line-height:1.3}
-.card-peek .inner h3 em{color:var(--accent);font-style:italic}
+.envelope-wrapper{position:fixed;inset:0;z-index:1000;background:#E9DCC0;transition:opacity 1s,transform 1.2s cubic-bezier(.16,1,.3,1);pointer-events:all;cursor:pointer;overflow:hidden}
+.envelope-wrapper.opened{opacity:0;transform:scale(1.12);pointer-events:none}
+.envelope-wrapper .env-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.envelope-wrapper .env-text{position:absolute;left:0;right:0;top:13%;text-align:center;font-family:'Playfair Display',serif;color:var(--ink);text-shadow:0 1px 10px rgba(251,247,240,.8)}
+.envelope-wrapper .env-text .small{font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:#7A5A2E;margin-bottom:.6rem}
+.envelope-wrapper .env-text h3{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:400;line-height:1.2}
+.envelope-wrapper .env-text h3 em{color:#8C6A3A;font-style:italic}
+.envelope-wrapper .tap{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);padding:.6rem 1.6rem;border:1px solid rgba(122,90,46,.5);border-radius:50px;background:rgba(251,247,240,.55);backdrop-filter:blur(6px);font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:#6B4E26;white-space:nowrap;animation:tapPulse 2s infinite}
 .main{position:relative;z-index:2;opacity:0;transition:opacity .6s;max-width:500px;margin:0 auto;padding:0 1rem}
 .main.show{opacity:1}
 .inv-card{background:rgba(251,247,240,.85);backdrop-filter:blur(10px);border-radius:16px;margin:1.5rem 0;padding:2.5rem 2rem;text-align:center;box-shadow:0 4px 30px rgba(120,90,60,.1);border:1px solid rgba(168,131,79,.18);position:relative;overflow:hidden}
@@ -96,13 +88,9 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </head>
 <body>
 <div class="envelope-wrapper" id="envelopeWrapper">
-<div class="envelope" id="envelope">
-<div class="flap"></div>
-<div class="card-peek"><div class="inner"><p class="small">The grand celebration of</p><h3>Laila <em>&amp;</em> Sherif</h3></div></div>
-<div class="body-env"></div>
-<div class="seal"><img src="images/seal.jpg" alt="Wax seal" decoding="async"></div>
+<video class="env-video" src="videos/envelope.mp4" autoplay muted loop playsinline preload="auto"></video>
+<div class="env-text"><p class="small">The grand celebration of</p><h3>Laila <em>&amp;</em> Sherif</h3></div>
 <span class="tap">Tap to open</span>
-</div>
 </div>
 <canvas id="particles"></canvas>
 <div class="main" id="mainContent">
@@ -119,9 +107,9 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </div>
 <div class="music-btn" id="musicBtn"><div class="bars"><span style="height:3px"></span><span style="height:7px"></span><span style="height:5px"></span></div>Music</div>
 <script>
-const env=document.getElementById('envelope'),wrapper=document.getElementById('envelopeWrapper'),main=document.getElementById('mainContent');
-env.addEventListener('click',()=>{env.classList.add('open');setTimeout(()=>{wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflow='auto'},1200)});
-document.body.style.overflow='hidden';
+const wrapper=document.getElementById('envelopeWrapper'),main=document.getElementById('mainContent');
+wrapper.addEventListener('click',()=>{if(wrapper.classList.contains('opened'))return;wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflowY='auto';setTimeout(()=>wrapper.querySelector('video').pause(),1200)});
+document.body.style.overflowY='hidden';
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let W,H,sparks=[];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
 window.addEventListener('resize',resize);resize();
