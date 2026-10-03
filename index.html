@@ -14,6 +14,10 @@ html{scroll-behavior:smooth}
 body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radial-gradient(circle at 20% 0%,#F9F2E6 0,transparent 50%),radial-gradient(circle at 80% 100%,#EADCC6 0,transparent 55%);background-attachment:fixed;color:var(--text);overflow-x:hidden}
 .envelope-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#F3EADB,#E6D6BE);transition:opacity .8s;pointer-events:all}
 .envelope-wrapper.opened{opacity:0;pointer-events:none}
+.envelope-wrapper .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.envelope-wrapper::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(243,234,219,.35),rgba(230,214,190,.55))}
+.envelope-wrapper .envelope{z-index:2}
+.envelope .tap{text-shadow:0 1px 6px rgba(251,247,240,.9)}
 .envelope{position:relative;width:320px;height:420px;cursor:pointer}
 .envelope .seal{width:120px;height:120px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;border-radius:50%;overflow:hidden;box-shadow:0 4px 20px rgba(62,47,37,.3);transition:transform .4s}
 .envelope .seal img{width:100%;height:100%}
@@ -93,6 +97,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 </head>
 <body>
 <div class="envelope-wrapper" id="envelopeWrapper">
+<video class="bg-video" src="videos/intro.mp4" autoplay muted loop playsinline preload="auto"></video>
 <div class="envelope" id="envelope">
 <div class="flap"></div>
 <div class="card-peek"><div class="inner"><p class="small">The grand celebration of</p><h3>Laila <em>&amp;</em> Sherif</h3></div></div>
@@ -117,7 +122,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 <div class="music-btn" id="musicBtn"><div class="bars"><span style="height:3px"></span><span style="height:7px"></span><span style="height:5px"></span></div>Music</div>
 <script>
 const env=document.getElementById('envelope'),wrapper=document.getElementById('envelopeWrapper'),main=document.getElementById('mainContent');
-env.addEventListener('click',()=>{env.classList.add('open');setTimeout(()=>{wrapper.classList.add('opened');main.classList.add('show');document.body.style.overflow='auto'},1200)});
+env.addEventListener('click',()=>{env.classList.add('open');setTimeout(()=>{wrapper.classList.add('opened');main.classList.add('show');setTimeout(()=>wrapper.querySelector('video').pause(),800);document.body.style.overflow='auto'},1200)});
 document.body.style.overflow='hidden';
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let W,H,sparks=[];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
