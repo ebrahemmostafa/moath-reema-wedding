@@ -80,6 +80,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);background-image:radi
 .rsvp-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .rsvp-error{font-size:.7rem;color:#A0503A;text-align:center;min-height:1em}
 .rsvp-form button:disabled{opacity:.6;cursor:wait;transform:none}
+.credit{text-align:center;font-size:.6rem;letter-spacing:.12em;color:var(--text);opacity:.75;margin-top:.5rem}
+.credit a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
 .thank-you{display:none;font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--accent);padding:2rem 0}
 .footer-card{background:linear-gradient(135deg,#8C6A4F,#5E4634);border:1px solid rgba(168,131,79,.3)}
 .footer-card::before{background:linear-gradient(90deg,#D9C4A5,#F3EADB,#D9C4A5)}
@@ -117,6 +119,7 @@ canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-even
 <div class="inv-card reveal"><span class="eyebrow">The Day</span><h2 style="font-size:1.4rem">A Timeline of <em>Joy</em></h2><div class="tl-item"><span class="tl-time">8:00 PM</span><span class="tl-dot"></span><div class="tl-info"><h4>Guest Arrival</h4><p>Welcome drinks at the oasis courtyard</p></div></div><div class="tl-item"><span class="tl-time">8:30 PM</span><span class="tl-dot"></span><div class="tl-info"><h4>The Ceremony</h4><p>Vows beneath the golden canopy</p></div></div><div class="tl-item"><span class="tl-time">9:30 PM</span><span class="tl-dot"></span><div class="tl-info"><h4>Dinner</h4><p>A lavish feast under the stars</p></div></div><div class="tl-item"><span class="tl-time">12:00 AM</span><span class="tl-dot"></span><div class="tl-info"><h4>End of the Night</h4><p>Thank you for being part of our special day <span class="heart">&#9829;</span></p></div></div><div class="tl-sep"><span>&#9829;</span></div><p class="tl-motto">Good food &nbsp;&bull;&nbsp; Great company &nbsp;&bull;&nbsp; Lasting memories</p></div>
 <div class="inv-card reveal"><span class="eyebrow">Be With Us</span><h2 style="font-size:1.4rem">Kindly <em>Reply</em></h2><form class="rsvp-form" id="rsvpForm"><input type="text" name="name" placeholder="Your Full Name" maxlength="100" required><select name="attending" required><option value="">Will you attend?</option><option value="yes">Joyfully Accept</option><option value="no">Respectfully Decline</option></select><textarea name="message" placeholder="A message for the couple" maxlength="1000"></textarea><input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true"><button type="submit">Send Reply</button><p class="rsvp-error" id="rsvpError"></p></form><p class="thank-you" id="thankYou">Thank you!<br>The stage is set for your arrival.</p></div>
 <div class="inv-card footer-card reveal"><span class="ornament">*</span><h2 style="font-size:1.6rem">The curtain rises on<br><em>our forever.</em></h2><div class="divider"></div><p class="sub" style="color:var(--cream)">Moath &amp; Reema</p><p style="margin-top:2rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase">11 October 2026</p></div>
+<p class="credit">made with love by <a href="https://ajwa2-collection.vercel.app/" target="_blank" rel="noopener">ajwaa</a></p>
 <div style="height:5rem"></div>
 </div>
 <audio id="bgMusic" src="audio/song.mp4" loop preload="auto"></audio>
