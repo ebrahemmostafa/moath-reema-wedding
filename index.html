@@ -139,6 +139,7 @@ function updateCD(){const now=new Date(),diff=wedding-now;if(diff<=0)return;docu
 updateCD();setInterval(updateCD,1000);
 document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefault();e.target.style.display='none';document.getElementById('thankYou').style.display='block'});
 const musicBtn=document.getElementById('musicBtn'),bgMusic=document.getElementById('bgMusic');let playing=false;bgMusic.volume=.7;
+bgMusic.addEventListener('timeupdate',()=>{if(bgMusic.duration&&bgMusic.currentTime>=bgMusic.duration-4){bgMusic.currentTime=0;bgMusic.play()}});
 function setMusic(on){playing=on;musicBtn.classList.toggle('playing',on);if(on)bgMusic.play().catch(()=>{playing=false;musicBtn.classList.remove('playing')});else bgMusic.pause()}
 musicBtn.addEventListener('click',()=>setMusic(!playing));
 </script>
