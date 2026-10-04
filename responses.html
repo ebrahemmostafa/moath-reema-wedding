@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F3EADB">
+<title>RSVP Responses</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500&family=Amiri&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#A0785A;--gold:#A8834F;--cream:#FBF7F0;--sand:#EFE4D2;--ink:#3E2F25;--text:#6B5646;--bg:#F3EADB;--yes:#5E7A4F;--no:#A0503A}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem 3rem}
+.wrap{max-width:960px;margin:0 auto}
+header{text-align:center;margin-bottom:1.8rem}
+.eyebrow{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(1.7rem,6vw,2.4rem);color:var(--ink);margin-top:.3rem}
+h1 em{color:var(--accent)}
+.card{background:var(--cream);border:1px solid rgba(168,131,79,.2);border-radius:14px;box-shadow:0 4px 24px rgba(120,90,60,.08)}
+.login{max-width:360px;margin:0 auto;padding:2rem 1.5rem;text-align:center}
+.login p{font-size:.8rem;margin-bottom:1rem}
+input,button{font-family:inherit;font-size:.85rem}
+input[type=password],input[type=search]{width:100%;padding:.8rem 1rem;border:1px solid rgba(168,131,79,.3);border-radius:8px;background:#fff;color:var(--ink);outline:none}
+input:focus{border-color:var(--gold)}
+button{padding:.75rem 1.4rem;border:none;border-radius:50px;background:var(--accent);color:var(--cream);letter-spacing:.15em;text-transform:uppercase;font-size:.65rem;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(160,120,90,.5)}
+button:disabled{opacity:.6;cursor:wait}
+.login button{width:100%;margin-top:.8rem}
+.err{color:var(--no);font-size:.75rem;min-height:1.2em;margin-top:.7rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+.stat{padding:1rem;text-align:center}
+.stat .n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--ink);line-height:1}
+.stat .l{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-top:.4rem}
+.stat.yes .n{color:var(--yes)}.stat.no .n{color:var(--no)}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.toolbar input{flex:1;min-width:180px}
+.filters{display:flex;gap:.4rem}
+.filters button{background:transparent;color:var(--text);border:1px solid rgba(168,131,79,.3);padding:.55rem .9rem}
+.filters button.on{background:var(--accent);color:var(--cream);border-color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:.85rem 1rem;border-bottom:1px solid rgba(168,131,79,.15);font-size:.8rem;vertical-align:top}
+th{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500}
+tr:last-child td{border-bottom:none}
+td.name{color:var(--ink);font-weight:500}
+td.msg{white-space:pre-wrap;unicode-bidi:plaintext;font-family:'Poppins','Amiri',sans-serif}
+td.time{white-space:nowrap;font-size:.72rem;opacity:.8}
+.pill{display:inline-block;padding:.2rem .65rem;border-radius:50px;font-size:.65rem;white-space:nowrap}
+.pill.yes{background:rgba(94,122,79,.12);color:var(--yes)}
+.pill.no{background:rgba(160,80,58,.12);color:var(--no)}
+.empty{padding:2.5rem 1rem;text-align:center;font-size:.85rem}
+.meta{font-size:.68rem;text-align:right;margin-top:.6rem;opacity:.7}
+.hidden{display:none}
+@media (max-width:640px){
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{padding:.9rem 1rem;border-bottom:1px solid rgba(168,131,79,.15)}
+  td{border:none;padding:.15rem 0}
+  td.name{font-size:.95rem}
+  td.msg:empty{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="eyebrow">Moath &amp; Reema</div><h1>RSVP <em>Responses</em></h1></header>
+
+  <form class="card login" id="login">
+    <p>Enter the passcode to view responses.</p>
+    <input type="password" id="pass" placeholder="Passcode" autocomplete="current-password" required>
+    <button type="submit">View Responses</button>
+    <div class="err" id="loginErr"></div>
+  </form>
+
+  <section id="dash" class="hidden">
+    <div class="stats">
+      <div class="card stat"><div class="n" id="sTotal">0</div><div class="l">Responses</div></div>
+      <div class="card stat yes"><div class="n" id="sYes">0</div><div class="l">Attending</div></div>
+      <div class="card stat no"><div class="n" id="sNo">0</div><div class="l">Declined</div></div>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="Search name or message">
+      <div class="filters" id="filters">
+        <button type="button" data-f="all" class="on">All</button>
+        <button type="button" data-f="yes">Yes</button>
+        <button type="button" data-f="no">No</button>
+      </div>
+      <button type="button" class="ghost" id="refresh">Refresh</button>
+      <button type="button" class="ghost" id="csv">CSV</button>
+      <button type="button" class="ghost" id="logout">Lock</button>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Name</th><th>Attending</th><th>Message</th><th>Received</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty hidden" id="empty">No responses yet.</div>
+    </div>
+    <div class="meta" id="updated"></div>
+  </section>
+</div>
+<script>
+const SUPABASE_URL='https://jcuqwcwkowtjxcykstlf.supabase.co',SUPABASE_ANON_KEY='sb_publishable_BFtrH3u_sv9zat6B9SALyw_nS7Pajaa';
+const $=id=>document.getElementById(id);
+let passcode='',data=[],filter='all';
+const store={get(){try{return sessionStorage.getItem('mr_pass')||''}catch(e){return ''}},set(v){try{v?sessionStorage.setItem('mr_pass',v):sessionStorage.removeItem('mr_pass')}catch(e){}}};
+
+async function load(){
+  const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/moath_reema_get_rsvps',{method:'POST',headers:{apikey:SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:JSON.stringify({passcode})});
+  if(res.status===401||res.status===403)throw new Error('auth');
+  if(!res.ok)throw new Error('http '+res.status);
+  data=await res.json();
+  render();
+  $('updated').textContent='Updated '+new Date().toLocaleTimeString();
+}
+
+function fmt(ts){return new Date(ts).toLocaleString(undefined,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}
+
+function render(){
+  $('sTotal').textContent=data.length;
+  $('sYes').textContent=data.filter(r=>r.attending==='yes').length;
+  $('sNo').textContent=data.filter(r=>r.attending==='no').length;
+  const q=$('search').value.trim().toLowerCase();
+  const list=data.filter(r=>(filter==='all'||r.attending===filter)&&(!q||(r.name+' '+(r.message||'')).toLowerCase().includes(q)));
+  const tbody=$('rows');tbody.replaceChildren();
+  for(const r of list){
+    const tr=document.createElement('tr');
+    const td=(cls,text)=>{const c=document.createElement('td');c.className=cls;c.textContent=text;tr.appendChild(c);return c};
+    td('name',r.name).dir='auto';
+    const p=document.createElement('span');p.className='pill '+r.attending;p.textContent=r.attending==='yes'?'Attending':'Declined';
+    td('','').appendChild(p);
+    td('msg',r.message||'').dir='auto';
+    td('time',fmt(r.created_at));
+    tbody.appendChild(tr);
+  }
+  $('empty').classList.toggle('hidden',list.length>0);
+  $('empty').textContent=data.length?'No matching responses.':'No responses yet.';
+}
+
+async function unlock(p){
+  passcode=p;const btn=$('login').querySelector('button');btn.disabled=true;$('loginErr').textContent='';
+  try{await load();store.set(p);$('login').classList.add('hidden');$('dash').classList.remove('hidden')}
+  catch(e){store.set('');$('loginErr').textContent=e.message==='auth'?'Wrong passcode.':'Could not load responses. Try again.'}
+  finally{btn.disabled=false}
+}
+
+$('login').addEventListener('submit',e=>{e.preventDefault();unlock($('pass').value)});
+$('search').addEventListener('input',render);
+$('filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filter=b.dataset.f;[...$('filters').children].forEach(x=>x.classList.toggle('on',x===b));render()});
+$('refresh').addEventListener('click',async e=>{e.target.disabled=true;try{await load()}catch(err){alert('Could not refresh.')}e.target.disabled=false});
+$('logout').addEventListener('click',()=>{store.set('');passcode='';data=[];$('pass').value='';$('dash').classList.add('hidden');$('login').classList.remove('hidden')});
+$('csv').addEventListener('click',()=>{
+  const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const csv='﻿'+[['Name','Attending','Message','Received'],...data.map(r=>[r.name,r.attending,r.message,new Date(r.created_at).toLocaleString()])].map(row=>row.map(esc).join(',')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='moath-reema-rsvps.csv';a.click();URL.revokeObjectURL(a.href);
+});
+
+const saved=store.get();if(saved)unlock(saved);
+</script>
+</body>
+</html>
